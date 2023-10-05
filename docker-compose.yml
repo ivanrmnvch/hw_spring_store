@@ -1,0 +1,23 @@
+version: '3.9'
+services:
+  postgres:
+    image: postgres
+    restart: always
+    networks:
+      - network
+    volumes:
+      - /home/ivanrmnvch/Programm/data/postgresql:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: secret
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      start_period: 3s
+      interval: 3s
+      timeout: 3s
+      retries: 5
+networks:
+  network:
