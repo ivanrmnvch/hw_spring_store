@@ -1,0 +1,13 @@
+.btn-return {
+    padding: 0;
+    margin: 3px;
+    width: 17px;
+    height: 17px;
+    background-color: white;
+    border: none;
+    text-align: center;
+    cursor: pointer;
+}
+.form-return {
+    text-align: end;
+}

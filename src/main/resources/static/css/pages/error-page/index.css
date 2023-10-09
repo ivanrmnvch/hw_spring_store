@@ -1,0 +1,19 @@
+.error-content {
+    width: 200px;
+    height: 100px;
+}
+.error-text {
+    height: 100%;
+    color: red;
+    display: flex;
+    font-size: 30px;
+    align-items: center;
+    justify-content: center;
+}
+.error-btn-return-wrapper {
+    position: absolute;
+}
+.error-btn-return {
+    left: 180px;
+    position: relative;
+}

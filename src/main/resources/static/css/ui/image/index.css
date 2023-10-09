@@ -1,0 +1,17 @@
+.image-wrapper {
+    object-fit: contain;
+    border-radius: 3px;
+}
+.image-btn {
+    cursor: pointer;
+}
+.image-btn:hover {
+    margin-top: 1px;
+    width: calc(100% - 2px) !important;
+    height: calc(100% - 2px) !important;
+}
+.image-btn:active {
+    margin-top: 2px;
+    width: calc(100% - 4px) !important;
+    height: calc(100% - 4px) !important;
+}

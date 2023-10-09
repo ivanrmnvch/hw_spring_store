@@ -1,0 +1,13 @@
+.message-text {
+    font-size: 16px;
+    color: red;
+}
+.message-content {
+    width: 100%;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.message-notification {
+    width: 200px;
+    height: 100px;
+}

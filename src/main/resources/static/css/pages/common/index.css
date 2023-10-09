@@ -1,0 +1,10 @@
+.content-wrapper {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px -1px gray;
+    padding: 10px;
+    display: flex;
+}
+.image-wrapper {
+
+}

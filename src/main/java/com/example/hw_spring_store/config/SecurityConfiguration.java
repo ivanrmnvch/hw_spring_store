@@ -1,4 +1,4 @@
-package com.example.config;
+package com.example.hw_spring_store.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -22,7 +22,7 @@ public class SecurityConfiguration {
     UserDetails user = User.withDefaultPasswordEncoder()
       .username("user")
       .password("1234")
-      .roles("USER")
+      .roles("ADMIN")
       .build();
     return new InMemoryUserDetailsManager(user);
   }
