@@ -1,3 +1,5 @@
+@import './product-card/index.css';
+
 .store-app {
     justify-content: center;
     margin: 32px 230px 0 16px;

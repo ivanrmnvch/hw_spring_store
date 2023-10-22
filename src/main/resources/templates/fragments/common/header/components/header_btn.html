@@ -1,0 +1,18 @@
+<form
+  th:fragment="headerBtn(action, imagePath)"
+  th:action="${action}"
+  method="GET"
+>
+  <button
+    class="header-btn-wrapper ml-4"
+    type="submit"
+  >
+    <div th:replace="~{fragments/common/image_wrapper :: imageWrapper(
+      ${25},
+      ${25},
+      ${true},
+      ${imagePath}
+    )}">
+    </div>
+  </button>
+</form>

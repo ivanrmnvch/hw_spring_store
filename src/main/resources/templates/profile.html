@@ -1,0 +1,88 @@
+<html lang="ru">
+<head>
+  <title>Profile</title>
+  <link rel="stylesheet" href="/css/index.css" type="text/css">
+</head>
+<body class="app">
+  <div class="center-app col">
+<!--    <jsp:include page="../../ui/header.html.jsp"></jsp:include>-->
+    <div th:replace="~{fragments/common/header/index :: header}"></div>
+    <div class="profile-page profile-page-${user.getRole()}">
+      <div class="row">
+        <div>
+          <img class="profile-icon" src="/icons/profile-circle-svgrepo-com.svg">
+        </div>
+        <div class="ml-5">
+          <div class="row">
+            <p>Логин: </p>
+<!--            <p class="ml-2">${user.getLogin()}</p>-->
+            <p class="ml-2" th:text="${'some login'}"></p>
+          </div>
+          <div class="row">
+            <p>Email: </p>
+<!--            <p class="ml-2">${user.getEmail()}</p>-->
+            <p class="ml-2" th:text="${'some email'}"></p>
+          </div>
+          <div class="row">
+            <p>Роль: </p>
+<!--            <p class="ml-2">${user.getRole()}</p>-->
+            <p class="ml-2" th:text="${'some role'}"></p>
+          </div>
+        </div>
+      </div>
+
+<!--      <c:when test="${user.getRole() == 'admin'}">-->
+
+      <div th:if="${true}">
+        <div class="col profile-edit-block">
+          <div class="row profile-form-edit">
+            <div>
+              Создайте новую позицию:
+            </div>
+            <form
+              method="GET"
+              action="create"
+            >
+              <button
+                type="submit"
+                class="profile-create-btn">
+                Создать
+              </button>
+            </form>
+          </div>
+          <div>
+            Введите id товара для редактирования:
+          </div>
+          <form
+            id="editPageForm"
+            method="GET"
+            class="row profile-form-edit"
+          >
+            <input
+              id="editPageInput"
+              placeholder="Enter id"
+              required
+              class="profile-text-field"
+              type="number"
+            >
+            <button
+              class="profile-edit-btn"
+              onclick="openEditPage()"
+            >
+              Редактировать
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+<script>
+  const openEditPage = () => {
+    const form = document.querySelector('#editPageForm');
+    const input = document.querySelector('#editPageInput');
+    const { value } = input;
+    form.action = `edit/${value}`;
+  };
+</script>

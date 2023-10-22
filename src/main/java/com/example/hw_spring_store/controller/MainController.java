@@ -24,11 +24,6 @@ public class MainController {
 
   }
 
-  @GetMapping("/profile")
-  public String profile() {
-    return "<h1>Profile</h1>";
-  }
-
   @GetMapping("/edit")
   public String edit() {
     return "<h1>Edit</h1>";

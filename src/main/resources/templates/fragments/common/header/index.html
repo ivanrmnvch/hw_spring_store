@@ -1,0 +1,80 @@
+<!--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>-->
+<!--<%@ page import="jakarta.servlet.http.Cookie" %>-->
+<!--<%@ page contentType="text/html;charset=UTF-8" language="java" %>-->
+<!--<%-->
+<!--  String action = "auth-form";-->
+<!--  String btnName = "Login";-->
+<!--  String className = "login-btn";-->
+<!--  Cookie[] cookies = request.getCookies();-->
+<!--  for (Cookie c: cookies) {-->
+<!--    if ("user".equals(c.getName())) {-->
+<!--      action = "logout";-->
+<!--      btnName = "Logout";-->
+<!--      className = "logout-btn";-->
+<!--      break;-->
+<!--    }-->
+<!--  }-->
+<!--  request.setAttribute("action", action);-->
+<!--  request.setAttribute("btnName", btnName);-->
+<!--  request.setAttribute("className", className);-->
+<!--%>-->
+<header
+  th:fragment="header"
+  class="header-wrapper app-center"
+>
+  <div class="content">
+    <form
+      class="content-item"
+      method="GET"
+      action="products"
+    >
+      <button
+        type="submit"
+        class="content-item__title">
+      Store
+      </button>
+    </form>
+    <div
+      class="content-item"
+      style="justify-content: end;"
+    >
+<!--      <h4-->
+<!--        class="header__user-name"-->
+<!--        th:text="${user.getText()}"-->
+<!--      >-->
+      </h4> <!--      ${user.getText()}-->
+
+<!--      th:if="${user.getUserIsAuthorized()}"-->
+      <div
+        th:if="${true}"
+      >
+        <div class="row" style="position: relative;">
+          <div th:replace="~{fragments/common/header/components/header_btn :: headerBtn(
+            ${'basket'},
+            ${'/icons/cart-shopping-svgrepo-com.svg'}
+          )}">
+          </div>
+<!--          <div class="counter">${cart.getCount()}</div>-->
+          <div th:text="${4}" class="counter"></div>
+          <div th:replace="~{fragments/common/header/components/header_btn :: headerBtn(
+            ${'profile'},
+            ${'/icons/profile-round-1342-svgrepo-com.svg'}
+          )}">
+          </div>
+        </div>
+      </div>
+      <form
+        class="reset ml-4"
+        method="GET"
+        th:action="'test'"
+      >
+        <button
+          class="${className}"
+          type="submit"
+          th:text="${'btnName'}"
+        >
+        </button>
+      </form>
+    </div>
+  </div>
+</header>
