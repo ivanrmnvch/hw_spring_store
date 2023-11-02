@@ -2,27 +2,40 @@ package com.example.hw_spring_store.controller;
 
 import com.example.hw_spring_store.dto.JwtRequest;
 import com.example.hw_spring_store.dto.RegistrationUserDto;
+import com.example.hw_spring_store.dto.TokenDto;
 import com.example.hw_spring_store.service.AuthService;
 
 import lombok.RequiredArgsConstructor;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class AuthController {
   private final AuthService authService;
 
   @PostMapping("/auth")
   public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest authRequest) {
+    log.debug("TEST12313213123");
    return authService.createAuthToken(authRequest);
   }
 
   @PostMapping("/registration")
   public ResponseEntity<?> createNewUser(@RequestBody RegistrationUserDto registrationUserDto) {
    return authService.createNewUser(registrationUserDto);
+  }
+
+  @RequestMapping(value = "/refresh", method = RequestMethod.POST, produces = "application/json")
+  //@PostMapping(value = "/refresh", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/json")
+  public ResponseEntity<?> refreshToken(@RequestBody TokenDto tokenDto) {
+    System.out.println("token dto " + tokenDto.getToken());
+    log.debug("TokenDto: " + tokenDto.getToken());
+    return ResponseEntity.ok("back token: " + tokenDto.getToken());
   }
 }

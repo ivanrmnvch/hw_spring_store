@@ -3,8 +3,9 @@ package com.example.hw_spring_store.controller;
 import com.example.hw_spring_store.entities.ProductsEntity;
 import com.example.hw_spring_store.service.ProductsService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.Optional;
@@ -30,14 +31,27 @@ public class MainController {
 //    return "<h1>Edit</h1>";
 //  }
 
-  @GetMapping("/store")
-  public String store() {
-    return "store";
+  @RequestMapping(value = "/store", method = RequestMethod.GET)
+  public ResponseEntity<?> store()
+  {
+    System.out.println("TSTSTESTESTRFESfsfsdfd");
+
+    HttpHeaders headers = new HttpHeaders();
+    headers.add("Content-Type", "application/json");
+    headers.add("Access-Control-Allow-Credentials", "true");
+    headers.add("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, PUT, OPTIONS");
+    headers.add("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+    return ResponseEntity.ok().headers(headers).body("store");
   }
 
-  @GetMapping("/profile")
-  public String profile() {
-    return "profile";
+  @RequestMapping(value = "/profile", method = RequestMethod.GET)
+  public ResponseEntity<?> profile() {
+    HttpHeaders headers = new HttpHeaders();
+    headers.add("Content-Type", "application/json");
+    headers.add("Access-Control-Allow-Credentials", "true");
+    headers.add("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, PUT, OPTIONS");
+    headers.add("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+    return ResponseEntity.ok().headers(headers).body("profile");
   }
 
   @GetMapping("/edit")

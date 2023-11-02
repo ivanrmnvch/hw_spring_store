@@ -26,6 +26,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -43,12 +44,20 @@ public class SecurityConfiguration {
   public void setJwtRequestFilter(JwtRequestFilter jwtRequestFilter) {
     this.jwtRequestFilter = jwtRequestFilter;
   }
+
+//  @Bean
+//  public void addCorsMappings(CorsRegistry registry) {
+//    registry.addMapping("/**")
+//      .allowedOrigins("http://localhost:8081")
+//      .allowedMethods("*");
+//  }
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     System.out.println("TEST 11");
     http
       .csrf().disable()
-      .cors().disable()
+//      .cors().disable()
+      .cors().and()
       .authorizeHttpRequests()
       .requestMatchers("/profile", "/info").authenticated()
       .requestMatchers("/edit").hasRole("ADMIN")

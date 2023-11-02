@@ -7,41 +7,26 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+import java.util.Optional;
+
+@RestController
 @RequiredArgsConstructor
 public class PagesController {
   private final ProductsService productsService;
 
-  @RequestMapping("/")
-  public String startPage(
+  @GetMapping("/products")
+  public Page<ProductsEntity> getListOfProducts(
     @RequestParam(name = "offset", defaultValue = "0") int offset,
     @RequestParam(name = "limit", defaultValue = "10") int limit,
     Model model
   ) {
-    Page<ProductsEntity> productsEntity = productsService.getList(offset, limit);
-    model.addAttribute("page", productsEntity);
-    Pagination pagination = new Pagination(
-      productsEntity.getTotalPages(),
-      productsEntity.getTotalElements()
-    );
-    model.addAttribute("pagination", pagination);
-    return "index";
+    return productsService.getList(offset, limit);
   }
 
-  @RequestMapping("/profile")
-  public String profile() {
-    return "profile";
-  }
-
-  @RequestMapping("/edit/{id}")
-  public String edit(
-    @PathVariable("id") Long id
-  ) {
-    System.out.println("ID " + id);
-    return "edit_page";
+  @GetMapping("/products/product/{id}")
+  public Optional<ProductsEntity> getProduct(@PathVariable("id") Long id) {
+    return productsService.getProductById(id);
   }
 }

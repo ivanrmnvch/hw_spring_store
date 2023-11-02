@@ -1,9 +1,6 @@
 package com.example.hw_spring_store.service;
 
-import com.example.hw_spring_store.dto.JwtRequest;
-import com.example.hw_spring_store.dto.JwtResponse;
-import com.example.hw_spring_store.dto.RegistrationUserDto;
-import com.example.hw_spring_store.dto.UserDto;
+import com.example.hw_spring_store.dto.*;
 import com.example.hw_spring_store.entities.User;
 import com.example.hw_spring_store.exceptions.Error;
 import com.example.hw_spring_store.utils.JwtTokenUtils;
@@ -18,6 +15,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+
+import java.security.Principal;
 
 @Service
 @RequiredArgsConstructor
@@ -37,7 +38,7 @@ public class AuthService {
 
     UserDetails userDetails = userService.loadUserByUsername(authRequest.getLogin());
     String token = jwtTokenUtils.generateToken(userDetails);
-    return ResponseEntity.ok(new JwtResponse(token));
+    return ResponseEntity.ok(new AuthorizedUserDto(token, authRequest.getLogin()));
   }
 
   public ResponseEntity<?> createNewUser(@RequestBody RegistrationUserDto registrationUserDto) {
