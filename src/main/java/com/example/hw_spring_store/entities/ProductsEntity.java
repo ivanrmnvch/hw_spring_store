@@ -20,10 +20,20 @@ public class ProductsEntity{
   private int price;
   @Column(nullable = false)
   private String imagePath;
-  @Column(nullable = false)
-  private String brand;
-  @Column(nullable = false)
-  private String category;
+
+  @ManyToOne
+  @JoinColumn(name = "brand", referencedColumnName = "id")
+  private Brand brand;
+
+//  @Column(nullable = false)
+//  private String brand;
+
+  @ManyToOne
+  @JoinColumn(name = "category", referencedColumnName = "id")
+  private SubSection subSection;
+
+//  @Column(nullable = false)
+//  private String category;
   @Column(columnDefinition = "boolean DEFAULT TRUE", nullable = false)
   private boolean active;
   @Column(nullable = false)

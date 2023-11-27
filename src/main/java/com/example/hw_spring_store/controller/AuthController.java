@@ -22,7 +22,6 @@ public class AuthController {
 
   @PostMapping("/auth")
   public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest authRequest) {
-    log.debug("TEST12313213123");
    return authService.createAuthToken(authRequest);
   }
 
@@ -32,10 +31,7 @@ public class AuthController {
   }
 
   @RequestMapping(value = "/refresh", method = RequestMethod.POST, produces = "application/json")
-  //@PostMapping(value = "/refresh", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/json")
   public ResponseEntity<?> refreshToken(@RequestBody TokenDto tokenDto) {
-    System.out.println("token dto " + tokenDto.getToken());
-    log.debug("TokenDto: " + tokenDto.getToken());
     return ResponseEntity.ok("back token: " + tokenDto.getToken());
   }
 }

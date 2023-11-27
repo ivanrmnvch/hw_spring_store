@@ -5,12 +5,12 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class Error {
+public class Resp {
   private int status;
   private String message;
   private Date timestamp;
 
-  public Error(int status, String message) {
+  public Resp(int status, String message) {
     this.status = status;
     this.message = message;
     timestamp = new Date();

@@ -2,7 +2,7 @@ package com.example.hw_spring_store.service;
 
 import com.example.hw_spring_store.dto.*;
 import com.example.hw_spring_store.entities.User;
-import com.example.hw_spring_store.exceptions.Error;
+import com.example.hw_spring_store.exceptions.Resp;
 import com.example.hw_spring_store.utils.JwtTokenUtils;
 
 import lombok.RequiredArgsConstructor;
@@ -15,10 +15,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-
-import java.security.Principal;
 
 @Service
 @RequiredArgsConstructor
@@ -33,7 +29,7 @@ public class AuthService {
     try {
       authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getLogin(), authRequest.getPassword()));
     } catch (BadCredentialsException e) {
-      return new ResponseEntity<>(new Error(HttpStatus.UNAUTHORIZED.value(), "Неверный логин или пароль"), HttpStatus.UNAUTHORIZED);
+      return new ResponseEntity<>(new Resp(HttpStatus.UNAUTHORIZED.value(), "Неверный логин или пароль"), HttpStatus.UNAUTHORIZED);
     }
 
     UserDetails userDetails = userService.loadUserByUsername(authRequest.getLogin());
@@ -43,7 +39,7 @@ public class AuthService {
 
   public ResponseEntity<?> createNewUser(@RequestBody RegistrationUserDto registrationUserDto) {
     if (userService.fingByLogin(registrationUserDto.getLogin()).isPresent()) {
-      return new ResponseEntity<>(new Error(HttpStatus.BAD_REQUEST.value(), "Пользователь с указаным логином уже зарегистрирован"), HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<>(new Resp(HttpStatus.BAD_REQUEST.value(), "Пользователь с указаным логином уже зарегистрирован"), HttpStatus.BAD_REQUEST);
     }
     User user = userService.createNewUser(registrationUserDto);
     return ResponseEntity.ok(new UserDto(user.getId(), user.getLogin(), user.getEmail()));

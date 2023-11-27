@@ -18,7 +18,7 @@ public class WebConfig implements WebMvcConfigurer {
   public void addCorsMappings(CorsRegistry registry) {
     // todo проверить патерн
     registry.addMapping("/**") // Путь к вашему API
-      .allowedOrigins("http://localhost:8081") // Разрешенный домен (адрес вашего Vue.js приложения)
+      .allowedOrigins("http://localhost:8080", "http://localhost:8081") // Разрешенный домен (адрес вашего Vue.js приложения)
       .allowedMethods("*");
 //      .allowCredentials(true) // Разрешение использования credentials (например, куки, аутентификация через HTTP)
 //      .maxAge(3600); // Время в секундах, в течение которого preflight запросы будут кэшироваться (3600 секунд или 1 час)
