@@ -41,11 +41,7 @@ public class JwtTokenUtils {
     Date issuedDate = new Date();
     // дата смерти токена
 
-    System.out.println("1");
-
     Date expiredDate = new Date(issuedDate.getTime() + lifetime.toMillis());
-
-    System.out.println("2");
 
     try {
       return Jwts.builder()
@@ -55,10 +51,9 @@ public class JwtTokenUtils {
         .signWith(SignatureAlgorithm.HS256, secret)
         .compact();
     } catch (Exception e) {
-      System.out.println("TEST");
       System.err.println(e);
     }
-    return "test";
+    return null;
   }
 
   public String getLogin(String token) {

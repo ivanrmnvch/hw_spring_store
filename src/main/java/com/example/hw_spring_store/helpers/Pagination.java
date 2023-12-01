@@ -18,8 +18,6 @@ public class Pagination {
     list = new String[]{"1"};
     this.totalPages = totalPages;
     this.totalElements = totalElements;
-    System.out.println("totalPages " + totalPages);
-    System.out.println("totalElements " + totalElements);
   }
 
 //  public String[] getList() {

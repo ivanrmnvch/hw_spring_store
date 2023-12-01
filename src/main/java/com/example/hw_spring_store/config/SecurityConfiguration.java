@@ -53,7 +53,6 @@ public class SecurityConfiguration {
 //  }
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    System.out.println("TEST 11");
     http
       .csrf().disable()
 //      .cors().disable()

@@ -32,6 +32,6 @@ public class AuthController {
 
   @RequestMapping(value = "/refresh", method = RequestMethod.POST, produces = "application/json")
   public ResponseEntity<?> refreshToken(@RequestBody TokenDto tokenDto) {
-    return ResponseEntity.ok("back token: " + tokenDto.getToken());
+    return authService.refreshToken(tokenDto);
   }
 }

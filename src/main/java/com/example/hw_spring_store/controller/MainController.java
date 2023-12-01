@@ -34,8 +34,6 @@ public class MainController {
   @RequestMapping(value = "/store", method = RequestMethod.GET)
   public ResponseEntity<?> store()
   {
-    System.out.println("TSTSTESTESTRFESfsfsdfd");
-
     HttpHeaders headers = new HttpHeaders();
     headers.add("Content-Type", "application/json");
     headers.add("Access-Control-Allow-Credentials", "true");

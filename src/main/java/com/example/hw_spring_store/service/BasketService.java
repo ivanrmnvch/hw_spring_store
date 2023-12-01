@@ -32,7 +32,6 @@ public class BasketService {
   public ResponseEntity<?> getBasket() throws JsonProcessingException {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     String login = authentication.getName();
-    System.out.println("LOGIN " + login);
 
     if (login == null) {
       return new ResponseEntity<>(new Resp(HttpStatus.BAD_REQUEST.value(), "Необходимо пройте авторизацию"), HttpStatus.BAD_REQUEST);
@@ -52,7 +51,6 @@ public class BasketService {
   public ResponseEntity<?> addProductToBasket(Long id, BasketDto basketDto) {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     String login = authentication.getName();
-    System.out.println("LOGIN " + login);
 
     if (login == null) {
       return new ResponseEntity<>(new Resp(HttpStatus.BAD_REQUEST.value(), "Необходимо пройте авторизацию"), HttpStatus.BAD_REQUEST);
@@ -70,8 +68,6 @@ public class BasketService {
       return new ResponseEntity<>(new Resp(HttpStatus.BAD_REQUEST.value(), "Не верный id заказа"), HttpStatus.BAD_REQUEST);
     }
 
-    System.out.println("user id" + user.get().getId());
-    System.out.println("product id" + product.get().getId());
 
     Optional<Basket> basket = basketRepository.findByUserIdAndProductId(user.get().getId(), product.get().getId());
 

@@ -19,14 +19,6 @@ public class SectionController {
   public SectionsDto getCategories(
     @RequestParam(name = "active", defaultValue = "true") String active
   ) {
-
-    System.out.println("ACTIVE: " + active);
-
-//    System.out.println(Boolean.valueOf("true"));
-//    System.out.println(Boolean.parseBoolean("true"));
-//    System.out.println(Boolean.valueOf("false"));
-//    System.out.println(Boolean.parseBoolean("false"));
-
     return sectionService.getSections(Boolean.parseBoolean(active));
   }
 

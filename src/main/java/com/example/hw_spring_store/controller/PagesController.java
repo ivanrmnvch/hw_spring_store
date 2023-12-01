@@ -25,13 +25,6 @@ public class PagesController {
     @RequestParam(name = "priceMin", defaultValue = "") Double priceMin,
     @RequestParam(name = "priceMax", defaultValue = "") Double priceMax
   ) {
-
-    System.out.println("BRAND: " + brand);
-    System.out.println("name: " + name);
-    System.out.println("category: " + category);
-    System.out.println("priceMin: " + priceMin);
-    System.out.println("priceMax: " + priceMax);
-
     return productsService.getList(name, category, brand, priceMin, priceMax, offset, limit);
   }
 

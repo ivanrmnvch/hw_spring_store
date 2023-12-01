@@ -5,6 +5,7 @@ import com.example.hw_spring_store.entities.User;
 import com.example.hw_spring_store.exceptions.Resp;
 import com.example.hw_spring_store.utils.JwtTokenUtils;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
@@ -43,5 +44,17 @@ public class AuthService {
     }
     User user = userService.createNewUser(registrationUserDto);
     return ResponseEntity.ok(new UserDto(user.getId(), user.getLogin(), user.getEmail()));
+  }
+
+  public ResponseEntity<?> refreshToken(TokenDto tokenDto) {
+    try {
+      String login = jwtTokenUtils.getLogin(tokenDto.getToken());
+      UserDetails userDetails = userService.loadUserByUsername(login);
+      String token = jwtTokenUtils.generateToken(userDetails);
+      AuthorizedUserDto data = new AuthorizedUserDto(token, login);
+      return new ResponseEntity<>(new RefreshDto(data, "Токен успешно обновлен"), HttpStatus.OK);
+    } catch (ExpiredJwtException e) {
+      return new ResponseEntity<>(new RefreshDto(null, "Время жизни токена истекло. Пройдите авторизацию повторно"), HttpStatus.OK);
+    }
   }
 }
