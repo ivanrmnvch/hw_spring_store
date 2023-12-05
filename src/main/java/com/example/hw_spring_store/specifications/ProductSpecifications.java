@@ -45,8 +45,4 @@ public class ProductSpecifications {
       return null;
     };
   }
-
-//  public static Specification<ProductsEntity> hasCategory(String category) {
-//    return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("category"), category);
-//  }
 }

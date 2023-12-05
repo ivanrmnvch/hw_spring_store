@@ -1,6 +1,7 @@
 package com.example.hw_spring_store.service;
 
 import com.example.hw_spring_store.dto.OrderDto;
+import com.example.hw_spring_store.dto.StatusDto;
 import com.example.hw_spring_store.entities.Basket;
 import com.example.hw_spring_store.entities.Order;
 import com.example.hw_spring_store.entities.ProductsEntity;
@@ -30,10 +31,6 @@ public class OrdersService {
   public ResponseEntity<?> createOrder(OrderDto orderDto) {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     String login = authentication.getName();
-
-    if (login == null) {
-      return new ResponseEntity<>(new Resp(HttpStatus.BAD_REQUEST.value(), "Необходимо пройте авторизацию"), HttpStatus.BAD_REQUEST);
-    }
 
     Optional<User> user = userRepository.findByLogin(login);
 
@@ -66,21 +63,13 @@ public class OrdersService {
       orders.add(order);
     }
 
-    List<Long> basketIds = basketList.stream().map(Basket::getId).toList();
-
     ordersRepository.saveAll(orders);
-    // basketRepository.deleteAll(basketIds);
-
     return new ResponseEntity<>(new Resp(HttpStatus.OK.value(), "Заказ успешно создан"), HttpStatus.OK);
   }
 
   public ResponseEntity<?> getOrders() {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     String login = authentication.getName();
-
-    if (login == null) {
-      return new ResponseEntity<>(new Resp(HttpStatus.BAD_REQUEST.value(), "Необходимо пройте авторизацию"), HttpStatus.BAD_REQUEST);
-    }
 
     Optional<User> user = userRepository.findByLogin(login);
 
@@ -97,24 +86,43 @@ public class OrdersService {
     if (Objects.equals(idArray, "")) {
       return new ResponseEntity<>(new String[0], HttpStatus.OK);
     }
+
     String[] basketIds = idArray.split(", ");
 
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     String login = authentication.getName();
-
-    if (login == null) {
-      return new ResponseEntity<>(new Resp(HttpStatus.BAD_REQUEST.value(), "Необходимо пройте авторизацию"), HttpStatus.BAD_REQUEST);
-    }
 
     Optional<User> user = userRepository.findByLogin(login);
 
     if (user.isEmpty()) {
       return new ResponseEntity<>(new Resp(HttpStatus.BAD_REQUEST.value(), "Пользователь не найден"), HttpStatus.BAD_REQUEST);
     }
+
     List<Long> ids = Arrays.stream(basketIds).map(Long::parseLong).toList();
-    System.out.println("parse long" + ids);
     List<Basket> basketList = basketRepository.findByIdIn(ids);
 
     return new ResponseEntity<>(basketList, HttpStatus.OK);
+  }
+
+  public ResponseEntity<?> getOrderById(Long id) {
+    Optional<List<Order>> order = ordersRepository.findByOrderId(id);
+    if (order.isEmpty()) {
+      return new ResponseEntity<>(new Resp(HttpStatus.BAD_REQUEST.value(), "Заказ не найден"), HttpStatus.BAD_REQUEST);
+    }
+    return new ResponseEntity<>(order.get(), HttpStatus.OK);
+  }
+
+  public ResponseEntity<?> updateOrderStatus(Long id, StatusDto statusDto) {
+    Optional<List<Order>> order = ordersRepository.findByOrderId(id);
+    if (order.isEmpty()) {
+      return new ResponseEntity<>(new Resp(HttpStatus.BAD_REQUEST.value(), "Заказ не найден"), HttpStatus.BAD_REQUEST);
+    }
+    List<Order> orderList = order.get();
+
+    orderList.forEach(item -> item.setStatus(statusDto.getStatus()));
+
+    ordersRepository.saveAll(orderList);
+
+    return new ResponseEntity<>(new Resp(HttpStatus.OK.value(), "Статус успешно изменен"), HttpStatus.OK);
   }
 }

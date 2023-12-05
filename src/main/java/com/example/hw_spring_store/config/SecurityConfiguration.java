@@ -1,34 +1,22 @@
 package com.example.hw_spring_store.config;
 
-import com.example.hw_spring_store.service.UserService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-
-import static org.springframework.security.config.Customizer.withDefaults;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.web.SecurityFilterChain;
+import com.example.hw_spring_store.service.UserService;
+import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpStatus;
 
 @Configuration
 @EnableWebSecurity
@@ -36,6 +24,24 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfiguration {
   private UserService userService;
   private JwtRequestFilter jwtRequestFilter;
+  private String[] authenticatedRoutes = new String[]{
+    "/basket/{id}",
+    "/basket",
+    "/checkout",
+    "/profile",
+    "/orders",
+  };
+  private String[] adminRoutes = new String[]{
+    "/orders/change-status",
+    "/products/edit-product/{id}",
+    "/products/create-product",
+    "/product/catalog-edit",
+    "/product/edit/{id}",
+    "/products/product",
+    "/product/new",
+    "/order/{id}",
+    "/section",
+  };
   @Autowired
   public void setUserService(UserService userService) {
     this.userService = userService;
@@ -44,35 +50,26 @@ public class SecurityConfiguration {
   public void setJwtRequestFilter(JwtRequestFilter jwtRequestFilter) {
     this.jwtRequestFilter = jwtRequestFilter;
   }
-
-//  @Bean
-//  public void addCorsMappings(CorsRegistry registry) {
-//    registry.addMapping("/**")
-//      .allowedOrigins("http://localhost:8081")
-//      .allowedMethods("*");
-//  }
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
       .csrf().disable()
-//      .cors().disable()
       .cors().and()
       .authorizeHttpRequests()
-      .requestMatchers("/profile", "/info").authenticated()
-      .requestMatchers("/edit").hasRole("ADMIN")
+      .requestMatchers(authenticatedRoutes).authenticated()
+      .requestMatchers(adminRoutes).hasRole("ADMIN")
       .anyRequest().permitAll()
       .and()
       .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
       .and()
       .exceptionHandling()
       .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
-      // из токена перекладываем пользователя в контекст
       .and().addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     return http.build();
   }
 
   @Bean
-  public PasswordEncoder passwordEncoder() {
+  public static PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
   }
   @Bean

@@ -30,8 +30,6 @@ public class SectionService {
       mainSections = sectionRepository.findByActiveFalse();
     }
 
-    //List<MainSection> mainSections = sectionRepository.findAll();
-
     List<SubSection> subSections = subSectionsRepository.findAll();
     return new SectionsDto(
       mainSections,

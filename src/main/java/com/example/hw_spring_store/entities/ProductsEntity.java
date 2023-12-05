@@ -12,12 +12,16 @@ public class ProductsEntity{
   @Column(nullable = false)
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
+
   @Column(nullable = false)
   private String name;
+
   @Column(nullable = false)
   private String description;
+
   @Column(nullable = false)
   private int price;
+
   @Column(nullable = false)
   private String imagePath;
 
@@ -25,19 +29,16 @@ public class ProductsEntity{
   @JoinColumn(name = "brand", referencedColumnName = "id")
   private Brand brand;
 
-//  @Column(nullable = false)
-//  private String brand;
-
   @ManyToOne
   @JoinColumn(name = "category", referencedColumnName = "id")
   private SubSection subSection;
 
-//  @Column(nullable = false)
-//  private String category;
   @Column(columnDefinition = "boolean DEFAULT TRUE", nullable = false)
   private boolean active;
+
   @Column(nullable = false)
   private LocalDateTime updatedAt;
+
   @Column(nullable = false)
   private LocalDateTime createdAt;
 }

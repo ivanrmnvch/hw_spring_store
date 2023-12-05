@@ -1,10 +1,20 @@
 version: '3.9'
 services:
-  postgres:
+#  spring:
+#    image: spring1
+#    restart: always
+#    depends_on:
+#      - postgres123
+#    ports:
+#      - "8090:8090"
+#    environment:
+#      SERVER_PORT: 8090
+#      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres123/secret1
+#      SPRING_DATASOURCE_USERNAME: 'postgres'
+#      SPRING_DATASOURCE_PASSWORD: '1234'
+  postgres123:
     image: postgres
     restart: always
-    networks:
-      - network
     volumes:
       - /home/ivanrmnvch/Programm/data/postgresql:/var/lib/postgresql/data
     ports:
@@ -12,12 +22,4 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 1234
-      POSTGRES_DB: secret
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
-      start_period: 3s
-      interval: 3s
-      timeout: 3s
-      retries: 5
-networks:
-  network:
+      POSTGRES_DB: secret1

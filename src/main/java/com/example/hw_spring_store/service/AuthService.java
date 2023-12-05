@@ -26,7 +26,6 @@ public class AuthService {
   private final AuthenticationManager authenticationManager;
 
   public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest authRequest) {
-    // сделать глобальный перехват исключений
     try {
       authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getLogin(), authRequest.getPassword()));
     } catch (BadCredentialsException e) {

@@ -41,7 +41,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
       }
     }
 
-    // проверка логина и отсутствия логина в контексте
     if (login != null && SecurityContextHolder.getContext().getAuthentication() == null) {
       UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
         login,

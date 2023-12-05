@@ -14,6 +14,7 @@ public class MainSection {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @Column()
   private String name;
 
   @Temporal(TemporalType.TIMESTAMP)
@@ -26,6 +27,4 @@ public class MainSection {
 
   @Column(columnDefinition = "boolean DEFAULT TRUE")
   private boolean active;
-
-  // Геттеры и сеттеры
 }

@@ -12,9 +12,8 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
-public class PagesController {
+public class ProductsController {
   private final ProductsService productsService;
-
   @GetMapping("/products")
   public Page<ProductsEntity> getListOfProducts(
     @RequestParam(name = "offset", defaultValue = "0") int offset,
@@ -27,19 +26,15 @@ public class PagesController {
   ) {
     return productsService.getList(name, category, brand, priceMin, priceMax, offset, limit);
   }
-
-
-
   @GetMapping("/products/product/{id}")
   public Optional<ProductsEntity> getProduct(@PathVariable("id") Long id) {
     return productsService.getProductById(id);
   }
-
-  @PostMapping("/products/product")
+  @PostMapping("/products/create-product")
   public ResponseEntity<?> createProduct(@RequestBody ProductBodyDto productBodyDto) {
     return productsService.createProduct(productBodyDto);
   }
-  @PutMapping("/products/product/{id}")
+  @PutMapping("/products/edit-product/{id}")
   public ResponseEntity<?> updateProduct(@PathVariable("id") Long id, @RequestBody ProductBodyDto updateBodyDto) {
     return productsService.updateProduct(id, updateBodyDto);
   }

@@ -1,6 +1,5 @@
 package com.example.hw_spring_store.utils;
 
-import com.example.hw_spring_store.dto.JwtRequest;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -33,10 +32,8 @@ public class JwtTokenUtils {
     List<String> rolesList = userDetails.getAuthorities().stream()
       .map(GrantedAuthority::getAuthority)
       .collect(Collectors.toList());
-    // добавить поле в payload
-    claims.put("roles", rolesList);
-//    claims.put("email", )
 
+    claims.put("roles", rolesList);
     // дата создания токена
     Date issuedDate = new Date();
     // дата смерти токена

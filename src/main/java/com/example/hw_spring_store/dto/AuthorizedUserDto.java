@@ -1,6 +1,5 @@
 package com.example.hw_spring_store.dto;
 
-import com.example.hw_spring_store.entities.User;
 import lombok.Data;
 
 @Data

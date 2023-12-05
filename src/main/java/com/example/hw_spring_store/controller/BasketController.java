@@ -1,7 +1,6 @@
 package com.example.hw_spring_store.controller;
 
 import com.example.hw_spring_store.dto.BasketDto;
-import com.example.hw_spring_store.dto.ProductBodyDto;
 import com.example.hw_spring_store.service.BasketService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
